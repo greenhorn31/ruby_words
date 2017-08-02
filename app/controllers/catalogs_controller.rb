@@ -1,24 +1,30 @@
 class CatalogsController < ApplicationController
   
   def index
-    @catalogs = Catalog.all
+   # current_user_init
+    @user = User.find('5981d5479e93f91208070615')
+    #@user = User.find(params[:id])
+    @catalogs = @user.catalogs.all
     render json: @catalogs
   end
 
   def create
-    @catalog = Catalog.new(catalog_params)
+    @user = User.find(params[:id])
+    @catalog = @user.catalogs.new(catalog_params)
     if @catalog.save
       render json:  @catalog
     end
   end
 
   def show
-    @catalog = Catalog.find(params[:id])
+    @user = User.find(params[:id])
+    @catalog = @user.catalogs.find(params[:id])
     render json: @catalog
   end
 
   def destroy
-    @catalog = Catalog.find(params[:id])
+    @user = User.find(params[:id])
+    @catalog = @user.catalogs.find(params[:id])
     @catalog.destroy
   end
 
