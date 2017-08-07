@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::API
-  Mongoid.load! './config/mongoid.yml'
 
+  before_action :authorize_request
   attr_reader :current_user
 
-  def current_user_init
-    @current_user = User.find(params[:id => '5981d5479e93f91208070615'])
+  private
+
+  def authorize_request
+    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user]
+    render json: { error: 'Not Authorized' }, status: 401 unless @current_user
   end
 end
+

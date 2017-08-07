@@ -1,26 +1,23 @@
 class UsersController < ApplicationController
 
+  skip_before_action :authorize_request, only: :create
+
   def create
-    @user = User.new(user_params)
-    if @user.save
-      render json: @user
-    end
+    user = User.create!(user_params)
+    auth_token = AuthenticateUser.new(user.email, user.password).call
+    render json: [auth_token: auth_token]
 
   end
 
-  def show
-    @user = User.find(params[:id])
-    render json: @user
-  end
-
- private
+  private
 
   def user_params
     params.require(:user).permit(
         :name,
         :email,
-        :password
+        :password,
+        :password_confirmation
     )
   end
-
 end
+
