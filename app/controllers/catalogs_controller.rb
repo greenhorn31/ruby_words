@@ -1,4 +1,6 @@
 class CatalogsController < ApplicationController
+
+  before_action :catalog, only: [:show, :update, :destroy]
   
   def index
     @catalogs = current_user.catalogs.all
