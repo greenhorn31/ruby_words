@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'bson_ext'
 gem 'bcrypt', '~> 3.1.11'
 gem 'rubocop', require: false
 gem 'jwt'

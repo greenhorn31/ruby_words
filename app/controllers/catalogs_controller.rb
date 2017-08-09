@@ -3,7 +3,7 @@ class CatalogsController < ApplicationController
   before_action :catalog, only: [:show, :update, :destroy]
   
   def index
-    @catalogs = current_user.catalogs.all
+    @catalogs = current_user.catalogs
     render json: @catalogs
   end
 
@@ -15,12 +15,15 @@ class CatalogsController < ApplicationController
   end
 
   def show
-    @catalog = current_user.catalogs.find(params[:id])
-    render json: @catalog
+    @jcatalog = {:id => @catalog.id, :name => @catalog.name }
+
+    json =  {:catalogs => @jcatalog}.to_json
+
+    render json: json
   end
 
   def destroy
-    @catalog = current_user.catalogs.find(params[:id])
+   # @catalog = current_user.catalogs.find(params[:id])
     @catalog.destroy
   end
 
@@ -32,7 +35,7 @@ class CatalogsController < ApplicationController
   end
 
   def catalog
-    @catalog = current_user.catalogs.find(params[:catalog_id])
+    @catalog = current_user.catalogs.find(params[:id])
   end
 
 end

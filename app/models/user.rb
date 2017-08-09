@@ -10,4 +10,5 @@ class User
 
   has_secure_password
   embeds_many :catalogs
+
 end
