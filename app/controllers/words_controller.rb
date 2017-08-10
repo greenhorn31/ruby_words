@@ -5,7 +5,7 @@ class WordsController < ApplicationController
 
 
   def index
-    render json: @catalog.words.to_json
+    render json: {:words => @catalog.words}.to_json
   end
 
   def create
@@ -19,7 +19,7 @@ class WordsController < ApplicationController
   end
 
   def show
-    render json: @word.to_json
+    render json: {:word => @word}.to_json
   end
 
   def delete

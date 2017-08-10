@@ -39,7 +39,7 @@ class CatalogsController < ApplicationController
       {:id => " #{u.id}", :name => u.name, :words => u.words}
     end
 
-    render json: @jcatalogs
+    render json: {:catalogs => @jcatalogs}.to_json
   end
 
   def destroy
