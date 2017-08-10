@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   get 'users', to: 'users#index'
 
+  get 'catalogs/words', to: 'catalogs#catalogs_words'
+
+  get 'catalogs/words/:id', to: 'catalogs#catalog_words'
+
   resources :catalogs do
     resources :words
   end

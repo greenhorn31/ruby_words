@@ -6,6 +6,7 @@ class User
   field :email, type: String
   field :password_digest, type: String
 
+
   index({ email: 1 } , { unique: true })
 
   has_secure_password

@@ -5,25 +5,24 @@ class WordsController < ApplicationController
 
 
   def index
-   # @catalog = current_user.catalogs.find(params[:catalog_id])
-    render json: @catalog.words
+    render json: @catalog.words.to_json
   end
 
   def create
-   # @catalog = current_user.catalogs.find(params[:catalog_id])
     @word = @catalog.words.create(word_params)
-    render json: @word
+    render json: @word.to_json
+  end
+
+  def update
+    @word.update(word_params)
+    render json: @word.to_json
   end
 
   def show
- #   @catalog = current_user.catalogs.find(params[:catalog_id])
-  #  @word = @catalog.words.find(params[:id])
-    render json: @word
+    render json: @word.to_json
   end
 
   def delete
-  #  @catalog = current_user.catalogs.find(params[:catalog_id])
-  #  @word = @catalog.words.find(params[:id])
     @word.destroy
   end
 

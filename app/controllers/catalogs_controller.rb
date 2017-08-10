@@ -1,29 +1,48 @@
 class CatalogsController < ApplicationController
 
   before_action :catalog, only: [:show, :update, :destroy]
-  
+
   def index
     @catalogs = current_user.catalogs
-    render json: @catalogs
+    @jcatalogs = @catalogs.map do |u|
+      {:id => " #{u.id}", :name => u.name}
+    end
+    @jcatalogs = {:catalogs => @jcatalogs }.to_json
+
+    render json: @jcatalogs
   end
 
   def create
     @catalog = current_user.catalogs.new(catalog_params)
     if @catalog.save
+
       render json:  @catalog
     end
   end
 
   def show
-    @jcatalog = {:id => @catalog.id, :name => @catalog.name }
+    @jcatalog = {:catalog => {:id => " #{@catalog.id}", :name => @catalog.name }}
 
-    json =  {:catalogs => @jcatalog}.to_json
+    render json: @jcatalog.to_json
+  end
 
-    render json: json
+  def catalog_words
+    @catalog = current_user.catalogs.find(params[:id])
+    @jcatalog = {:catalog => {:id => " #{@catalog.id}", :name => @catalog.name ,:words => @catalog.words}}
+
+    render json: @jcatalog
+  end
+
+  def catalogs_words
+    @catalogs = current_user.catalogs
+    @jcatalogs = @catalogs.map do |u|
+      {:id => " #{u.id}", :name => u.name, :words => u.words}
+    end
+
+    render json: @jcatalogs
   end
 
   def destroy
-   # @catalog = current_user.catalogs.find(params[:id])
     @catalog.destroy
   end
 
